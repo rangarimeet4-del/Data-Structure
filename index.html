@@ -1,0 +1,580 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Structures | Meet R. Rangari</title>
+
+<style>
+:root{
+  --bg:#07111f;
+  --panel:#102139;
+  --panel2:#162b45;
+  --cyan:#4de2df;
+  --blue:#5797ff;
+  --white:#edf5ff;
+  --muted:#a4b7cf;
+  --border:#ffffff18;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--white);
+  font-family:Arial,Helvetica,sans-serif;line-height:1.7;
+}
+.container{width:min(1160px,92%);margin:auto}
+button,input{font:inherit}
+a{text-decoration:none;color:inherit}
+
+.navbar{
+  position:sticky;top:0;z-index:50;
+  background:#07111fee;backdrop-filter:blur(15px);
+  border-bottom:1px solid var(--border);
+}
+.nav-inner{
+  display:flex;justify-content:space-between;
+  align-items:center;min-height:70px;gap:20px;
+}
+.logo{font-size:20px;font-weight:800;color:var(--cyan)}
+.logo span{color:white}
+.nav-links{display:flex;gap:22px}
+.nav-links a{font-size:14px;color:var(--muted)}
+.nav-links a:hover{color:var(--cyan)}
+.menu-btn{display:none;background:transparent;color:white;border:1px solid var(--border);padding:8px 12px;border-radius:8px}
+
+.hero{
+  min-height:550px;display:flex;align-items:center;
+  background:
+  linear-gradient(90deg,#07111ff5,#07111fc9,#07111f65),
+  url("https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1800&q=85")
+  center/cover;
+}
+.hero-content{padding:75px 0;max-width:760px}
+.eyebrow{color:var(--cyan);font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase}
+.hero h1{font-size:clamp(38px,6vw,68px);line-height:1.12;margin:18px 0}
+.gradient{
+  background:linear-gradient(90deg,var(--cyan),var(--blue));
+  color:transparent;background-clip:text;-webkit-background-clip:text;
+}
+.hero p{color:#c5d4e8;font-size:17px}
+.buttons{display:flex;gap:12px;flex-wrap:wrap;margin-top:27px}
+.btn{
+  padding:12px 19px;border-radius:9px;border:1px solid transparent;
+  cursor:pointer;font-weight:700;transition:.2s;
+}
+.primary{background:var(--cyan);color:#06131e}
+.primary:hover{transform:translateY(-3px)}
+.outline{background:#ffffff08;border-color:#7890aa;color:white}
+.outline:hover{border-color:var(--cyan);color:var(--cyan)}
+.hero-meta{display:flex;gap:24px;flex-wrap:wrap;margin-top:32px;color:#c6d5e8;font-size:13px}
+
+.stats{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:15px;margin-top:-30px;position:relative;
+}
+.stat{background:var(--panel);border:1px solid var(--border);border-radius:13px;padding:20px;text-align:center}
+.stat strong{display:block;font-size:28px;color:var(--cyan)}
+.stat span{font-size:13px;color:var(--muted)}
+
+section{padding:75px 0}
+.heading{text-align:center;margin-bottom:35px}
+.heading h2{font-size:clamp(28px,4vw,42px);margin:7px 0}
+.heading p{color:var(--muted);max-width:700px;margin:auto}
+
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:35px;align-items:center}
+.about-image{
+  min-height:340px;border-radius:16px;
+  background:url("https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1000&q=85") center/cover;
+  border:1px solid var(--border);
+}
+.about-copy h3{font-size:27px;margin:10px 0}
+.about-copy p{color:var(--muted);margin-bottom:12px}
+.info{list-style:none;margin-top:17px}
+.info li{padding:8px 0;border-bottom:1px solid var(--border)}
+.info b{color:var(--cyan)}
+
+.topics-section{background:#0a1728}
+.toolbar{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+.search{
+  flex:1;min-width:220px;padding:13px 15px;
+  border-radius:9px;border:1px solid var(--border);
+  background:var(--panel);color:white;outline:none;
+}
+.search:focus{border-color:var(--cyan)}
+.filters{display:flex;gap:7px;flex-wrap:wrap}
+.filter{
+  background:var(--panel);color:var(--muted);
+  border:1px solid var(--border);padding:9px 12px;
+  border-radius:8px;cursor:pointer;font-size:12px;
+}
+.filter.active,.filter:hover{background:var(--cyan);color:#06131e}
+.count{color:var(--muted);font-size:13px;margin-bottom:15px}
+.topic-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}
+.topic-card{
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:14px;overflow:hidden;cursor:pointer;
+  transition:.25s;
+}
+.topic-card:hover{transform:translateY(-5px);border-color:#4de2df99;box-shadow:0 14px 35px #0005}
+.visual{
+  height:185px;background:linear-gradient(135deg,#102c49,#09192b);
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;border-bottom:1px solid var(--border);
+}
+.visual svg{width:100%;height:100%;display:block}
+.card-content{padding:18px}
+.card-top{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.number{font-size:11px;color:var(--cyan);font-weight:800}
+.tag{font-size:10px;background:#4de2df18;color:var(--cyan);padding:4px 8px;border-radius:20px}
+.topic-card h3{font-size:18px;margin:10px 0 5px}
+.topic-card p{color:var(--muted);font-size:13px;min-height:58px}
+.read{color:var(--cyan);font-size:13px;font-weight:700;display:inline-block;margin-top:10px}
+.empty{display:none;padding:35px;text-align:center;background:var(--panel);border-radius:12px;color:var(--muted)}
+
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.feature{background:var(--panel);border:1px solid var(--border);border-radius:13px;padding:23px}
+.feature .emoji{font-size:28px}
+.feature h3{margin:8px 0}
+.feature p{font-size:14px;color:var(--muted)}
+
+.survey{
+  background:linear-gradient(135deg,#142d49,#102139);
+  border:1px solid var(--border);border-radius:15px;padding:30px;
+}
+.survey h3{color:var(--cyan);margin:18px 0 7px}
+.survey p,.survey li{color:#c4d4e8}
+.survey ul{padding-left:22px}
+.conclusion{
+  text-align:center;max-width:850px;margin:auto;
+  padding:35px;background:var(--panel);
+  border:1px solid var(--border);border-radius:15px;
+}
+.conclusion p{color:var(--muted);margin:15px 0}
+footer{padding:28px 0;border-top:1px solid var(--border);text-align:center;color:var(--muted);font-size:13px}
+footer strong{color:var(--cyan)}
+
+/* DETAIL */
+.modal{
+  display:none;position:fixed;inset:0;z-index:100;
+  background:#020813eF;backdrop-filter:blur(8px);
+  padding:18px;overflow-y:auto;
+}
+.modal.show{display:flex;align-items:flex-start;justify-content:center}
+.modal-box{
+  width:min(850px,100%);margin:auto;
+  background:#102139;border:1px solid var(--border);
+  border-radius:16px;overflow:hidden;
+}
+.modal-visual{height:260px;background:#0b1e33}
+.modal-visual svg{width:100%;height:100%}
+.modal-content{padding:26px}
+.modal-head{display:flex;justify-content:space-between;gap:15px}
+.modal h2{font-size:28px;margin:6px 0 12px}
+.close{background:#ffffff12;color:white;border:1px solid var(--border);border-radius:8px;padding:5px 12px;font-size:22px;cursor:pointer;height:42px}
+.modal-content p{color:#c4d4e8;margin:9px 0}
+.modal-content h3{color:var(--cyan);margin:20px 0 7px}
+.modal-content ul{padding-left:22px;color:#c4d4e8}
+.code{
+  background:#06101d;color:#9ff5df;padding:17px;
+  border:1px solid #29415c;border-radius:9px;
+  white-space:pre-wrap;overflow-x:auto;
+  font:13px Consolas,monospace;
+}
+.modal-actions{display:flex;justify-content:space-between;gap:12px;margin-top:24px}
+button:disabled{opacity:.35;cursor:not-allowed}
+
+@media(max-width:900px){
+  .topic-grid{grid-template-columns:repeat(2,1fr)}
+  .features{grid-template-columns:repeat(2,1fr)}
+  .stats{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:650px){
+  .menu-btn{display:block}
+  .nav-links{
+    display:none;position:absolute;top:65px;left:0;right:0;
+    background:#0b192b;padding:18px;flex-direction:column;
+  }
+  .nav-links.open{display:flex}
+  .hero{min-height:500px}
+  .hero-content{padding:55px 0}
+  .about-grid{grid-template-columns:1fr}
+  .about-image{min-height:230px}
+  .topic-grid,.features{grid-template-columns:1fr}
+  section{padding:55px 0}
+  .modal-content{padding:17px}
+  .modal-visual{height:200px}
+}
+</style>
+</head>
+
+<body>
+
+<header class="navbar">
+  <div class="container nav-inner">
+    <a class="logo" href="#home">DS<span> / FIELD PROJECT</span></a>
+    <button class="menu-btn" id="menuBtn">☰</button>
+    <nav class="nav-links" id="navLinks">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#topics">Topics</a>
+      <a href="#applications">Applications</a>
+      <a href="#survey">Survey</a>
+      <a href="#conclusion">Conclusion</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" id="home">
+  <div class="container hero-content">
+    <div class="eyebrow">B.Sc. Semester III · Computer Science</div>
+    <h1>Understanding the World of <span class="gradient">Data Structures</span></h1>
+    <p>
+      A detailed academic field project covering data organization,
+      arrays, linked lists, stacks, queues, trees, graphs, searching,
+      sorting and their applications with C++ examples.
+    </p>
+    <div class="buttons">
+      <a href="#topics" class="btn primary">Explore Topics →</a>
+      <a href="#about" class="btn outline">Project Overview</a>
+    </div>
+    <div class="hero-meta">
+      <span>📘 B.Sc. Computer Science</span>
+      <span>👨‍🎓 Meet R. Rangari</span>
+      <span>💻 C++ Learning</span>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <div class="stats">
+    <div class="stat"><strong>39</strong><span>Topics</span></div>
+    <div class="stat"><strong>C++</strong><span>Programming</span></div>
+    <div class="stat"><strong>DSA</strong><span>Core Concepts</span></div>
+    <div class="stat"><strong>III</strong><span>Semester</span></div>
+  </div>
+</div>
+
+<section id="about">
+  <div class="container about-grid">
+    <div class="about-image"></div>
+    <div class="about-copy">
+      <div class="eyebrow">Project Overview</div>
+      <h3>What are Data Structures?</h3>
+      <p>
+        A data structure is a way of organizing and storing data in a
+        computer so that it can be accessed and modified efficiently.
+      </p>
+      <p>
+        It supports operations such as insertion, deletion, searching,
+        sorting and traversal. Selecting a suitable structure can make
+        software easier to design and maintain.
+      </p>
+      <ul class="info">
+        <li><b>Project:</b> Data Structures</li>
+        <li><b>Course:</b> B.Sc. Semester III</li>
+        <li><b>Subject:</b> Computer Science</li>
+        <li><b>Student:</b> Meet R. Rangari</li>
+        <li><b>Language:</b> English</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="topics-section" id="topics">
+  <div class="container">
+    <div class="heading">
+      <div class="eyebrow">Interactive Learning Library</div>
+      <h2>Explore Project Topics</h2>
+      <p>Each topic has its own relevant educational diagram, explanation and example.</p>
+    </div>
+    <div class="toolbar">
+      <input class="search" id="searchInput" placeholder="Search Array, Stack, Queue, Tree..." type="search">
+      <div class="filters" id="filters"></div>
+    </div>
+    <div class="count" id="count"></div>
+    <div class="topic-grid" id="topicGrid"></div>
+    <div class="empty" id="empty">No topics found. Try a different search.</div>
+  </div>
+</section>
+
+<section id="applications">
+  <div class="container">
+    <div class="heading">
+      <div class="eyebrow">Real World</div>
+      <h2>Applications of Data Structures</h2>
+      <p>Data structures are used in many computer systems and software applications.</p>
+    </div>
+    <div class="features">
+      <div class="feature"><div class="emoji">🗄️</div><h3>Databases</h3><p>Indexes and trees help organize records and support retrieval.</p></div>
+      <div class="feature"><div class="emoji">🌐</div><h3>Web Browsers</h3><p>Stacks can support history and undo-like operations.</p></div>
+      <div class="feature"><div class="emoji">🧭</div><h3>Navigation</h3><p>Graphs represent locations and possible routes.</p></div>
+      <div class="feature"><div class="emoji">🖥️</div><h3>Operating Systems</h3><p>Queues help manage processes and scheduled tasks.</p></div>
+      <div class="feature"><div class="emoji">📦</div><h3>Memory Management</h3><p>Linked structures and trees help manage dynamic information.</p></div>
+      <div class="feature"><div class="emoji">🔎</div><h3>Searching Systems</h3><p>Hash tables and search trees support data lookup.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="survey">
+  <div class="container">
+    <div class="heading">
+      <div class="eyebrow">Practical Component</div>
+      <h2>Field Survey & Observation</h2>
+      <p>Use this framework to record actual observations from a computer center or software environment.</p>
+    </div>
+    <div class="survey">
+      <h3>Survey Objective</h3>
+      <p>To understand how information is stored, organized and retrieved in computer applications and to study the importance of efficient data organization.</p>
+      <h3>Suggested Questions</h3>
+      <ul>
+        <li>Which computer applications are used?</li>
+        <li>How is information stored and retrieved?</li>
+        <li>Are search and sorting operations performed?</li>
+        <li>What problems occur when data increases?</li>
+        <li>How can organized data improve software performance?</li>
+      </ul>
+      <h3>Observation Record</h3>
+      <ul>
+        <li>Place / Organization: __________________________</li>
+        <li>Date: ________________________________________</li>
+        <li>Person Interviewed / Role: _____________________</li>
+        <li>Applications Observed: ________________________</li>
+        <li>Key Observations: _____________________________</li>
+      </ul>
+      <p>Enter your actual survey findings here; do not present assumed observations as real survey results.</p>
+    </div>
+  </div>
+</section>
+
+<section id="conclusion">
+  <div class="container">
+    <div class="conclusion">
+      <div class="eyebrow">Project Summary</div>
+      <h2>Conclusion</h2>
+      <p>
+        Data structures are an essential foundation of computer science.
+        They provide organized ways to store and process information.
+        Understanding arrays, linked lists, stacks, queues, trees, graphs,
+        searching and sorting develops logical thinking and problem-solving skills.
+      </p>
+      <p>
+        This project connects theoretical concepts with C++ examples
+        and practical applications, creating a foundation for further
+        study of algorithms and software development.
+      </p>
+      <a href="#topics" class="btn primary">Review Topics ↑</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>Academic Field Project · <strong>Data Structures</strong></p>
+    <p>B.Sc. Semester III | Computer Science | Meet R. Rangari</p>
+  </div>
+</footer>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true">
+  <div class="modal-box">
+    <div class="modal-visual" id="modalVisual"></div>
+    <div class="modal-content">
+      <div class="modal-head">
+        <div>
+          <div class="eyebrow" id="modalCategory"></div>
+          <h2 id="modalTitle"></h2>
+        </div>
+        <button class="close" id="closeBtn" aria-label="Close">×</button>
+      </div>
+      <div id="modalBody"></div>
+      <div class="modal-actions">
+        <button class="btn outline" id="prevBtn">← Previous</button>
+        <button class="btn primary" id="nextBtn">Next Topic →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const topics=[
+["Introduction to Data Structures","Basics","Meaning, purpose and importance of organizing data.","A data structure is a particular way of organizing and storing data in a computer so it can be accessed and modified efficiently.","It helps programs manage information and perform operations such as insertion, deletion, searching and sorting.","Organizes information|Supports common operations|Helps manage growing data|Forms a foundation for algorithms","A student marks list can be stored in an array."],
+["Need for Data Structures","Basics","Why programs need organized data storage.","Data structures help store, manage and process information systematically.","A suitable structure can improve program clarity, memory use and operation efficiency.","Improves organization|Supports efficient operations|Handles larger collections|Makes program design clearer","A queue can manage customers waiting for service."],
+["Classification of Data Structures","Basics","Primitive, non-primitive, linear and non-linear structures.","Data structures are classified according to how elements are stored and related.","Primitive types include int and char. Non-primitive structures include arrays, lists, trees and graphs. Linear structures arrange data sequentially; non-linear structures represent branching or networks.","Primitive and non-primitive|Linear and non-linear|Static and dynamic|Different structures suit different problems","Array is linear; tree is non-linear."],
+["Primitive Data Types","Basics","Basic types used to represent individual values.","Primitive data types are basic types supported by a programming language.","In C++, int, float, double, char and bool represent common values and can be used to build larger structures.","int stores integers|float and double store decimal values|char stores a character|bool stores true or false","int age = 18; char grade = 'A';"],
+["Abstract Data Type (ADT)","Basics","Describe operations separately from implementation.","An Abstract Data Type describes data and the operations allowed on it without defining the exact implementation.","An ADT focuses on what operations are available. A stack ADT may provide push, pop and top.","Defines behavior|Hides implementation details|Supports modular design|Can have multiple implementations","A stack can use an array or linked list."],
+["Algorithm and Data Structure","Basics","How algorithms and data structures work together.","An algorithm is a step-by-step procedure, while a data structure organizes the data used by that procedure.","The choice of structure can simplify an algorithm and affect its performance.","Algorithm defines steps|Structure organizes data|Both solve problems|Design affects efficiency","Binary search uses sorted data."],
+["Time and Space Complexity","Basics","Describe operation growth and memory requirements.","Time complexity describes how operation count grows with input size; space complexity describes memory requirements.","Big O notation helps compare approaches as input size increases. Actual performance also depends on implementation and hardware.","O(1) constant|O(log n) logarithmic|O(n) linear|O(n²) quadratic","A full scan of n values has O(n) time."],
+["Array","Linear Structures","Indexed collection of elements.","An array stores elements of the same type in contiguous memory locations.","Elements are accessed by index. Built-in arrays have a fixed size, and insertion in the middle may require shifting.","Direct index access|Commonly fixed size|Elements share a type|Middle insertion may shift values","int marks[5] = {70,82,65,91,76};"],
+["One-Dimensional Array","Linear Structures","A sequence accessed with one index.","A one-dimensional array stores elements in a single sequence using one index.","It is useful for storing marks, temperatures or quantities.","One index|Sequential collection|Easy loop traversal|Suitable for similar values","for(int i=0;i<5;i++) cout<<marks[i];"],
+["Two-Dimensional Array","Linear Structures","Rows and columns for matrix-like data.","A two-dimensional array organizes values in rows and columns.","It is useful for tables and matrices. Each value uses a row and column index.","Represents tables|Two indexes|Useful for matrices|Often traversed with nested loops","int m[2][2]={{1,2},{3,4}};"],
+["Array Operations","Linear Structures","Traversal, insertion, deletion and updating.","Array operations are actions performed on its elements.","Access by index is generally O(1). Inserting or deleting within an array may require shifting elements.","Traversal|Insertion|Deletion|Searching and updating","arr[2] = 50; updates the third element."],
+["Linked List","Linear Structures","Nodes connected through links.","A linked list is a linear structure made of nodes containing data and one or more links.","Nodes need not occupy adjacent memory locations. Links connect the nodes in sequence.","Dynamic size|Nodes contain data and links|Convenient insertion at known positions|Position access needs traversal","A node can store data and a pointer to the next node."],
+["Singly Linked List","Linear Structures","Each node points to the next node.","A singly linked list is a list in which each node points to the next node.","The first node is the head; the final node commonly points to nullptr.","One link per node|Forward traversal|Dynamic allocation|Simple node structure","struct Node{int data; Node* next;};"],
+["Doubly Linked List","Linear Structures","Previous and next links.","A doubly linked list stores a previous and next link in each node.","It supports traversal in both directions but needs extra memory and careful pointer updates.","Two links per node|Forward and backward traversal|Useful for navigation|More pointer handling","struct Node{int data; Node* prev; Node* next;};"],
+["Circular Linked List","Linear Structures","The final node links back to the first.","A circular linked list connects its final node back to its first node.","It is useful for cyclic processing. Traversal needs a clear stopping condition.","Forms a cycle|May be singly or doubly linked|Useful for round-robin processing|No ordinary null end link","The last node's next pointer can refer to head."],
+["Stack","Linear Structures","Last In, First Out (LIFO).","A stack is a linear data structure that follows the Last In, First Out principle.","Insertion and removal happen at the top. Common operations are push, pop and peek.","Push adds|Pop removes top|Peek reads top|Check overflow and underflow","A stack of plates: the top plate is removed first."],
+["Stack Operations","Linear Structures","Push, pop, peek and emptiness checks.","Stack operations add, remove and inspect elements at the top.","Push inserts; pop removes; peek reads the top without removing it; isEmpty checks whether the stack has no elements.","push()|pop()|peek() or top()|isEmpty()","stack.push(10); stack.push(20);"],
+["Stack Using Array","Linear Structures","An array and top index implement a stack.","An array-based stack stores values in an array and tracks the top position with an index.","The implementation checks capacity before push and emptiness before pop.","Simple implementation|Basic version has fixed capacity|Push and pop O(1)|Needs boundary checks","int st[100]; int top=-1;"],
+["Stack Using Linked List","Linear Structures","Dynamic nodes implement stack behavior.","A linked-list stack uses nodes and a top pointer to manage elements.","Push and pop can occur at the head. It grows dynamically while memory is available.","Dynamic size|Top points to first node|Operations at head|Memory allocated per node","Push creates a node and makes it the new top."],
+["Applications of Stack","Applications","Practical uses of LIFO processing.","Stacks are useful when the most recently added item must be handled first.","They appear in function calls, expression processing, undo features and backtracking.","Function calls|Expression evaluation|Undo operations|Backtracking","An editor can use history to support undo."],
+["Queue","Linear Structures","First In, First Out (FIFO).","A queue is a linear structure that follows First In, First Out.","Insertion generally happens at the rear and removal at the front.","Enqueue inserts|Dequeue removes|Front is next|Rear is insertion end","People in a service line are served in arrival order."],
+["Queue Operations","Linear Structures","Enqueue, dequeue, front and rear.","Queue operations add, remove and inspect elements according to FIFO order.","Implementations check emptiness before removal and capacity before insertion when bounded.","Enqueue|Dequeue|Front or peek|isEmpty and isFull","Insert 10 then 20; dequeue removes 10 first."],
+["Circular Queue","Linear Structures","Reuse array positions with wrap-around.","A circular queue logically connects the end of its storage back to the beginning.","It can reuse positions freed by deletion, avoiding unused spaces in a simple linear array queue.","Wrap-around indexing|Space reuse|Front and rear move circularly|Modulo arithmetic","rear=(rear+1)%capacity;"],
+["Deque","Linear Structures","A double-ended queue.","A deque allows insertion and deletion at both ends.","It can support queue-like and stack-like behavior, depending on the operations used.","Insert at front or rear|Delete at front or rear|Flexible processing|Useful in scheduling","Add at front and remove from rear."],
+["Priority Queue","Linear Structures","Removal based on priority.","A priority queue removes elements according to priority rather than only arrival order.","It may be implemented using a heap. A min-priority queue and max-priority queue use different priority ordering.","Items have priorities|Min or max priority|Often uses a heap|Used in scheduling","A scheduler can process tasks by priority."],
+["Tree","Non-Linear Structures","Hierarchical parent-child relationships.","A tree is a non-linear structure of nodes connected by edges in a hierarchy.","It has a root; nodes can have children, and nodes without children are leaves.","Root|Parent and child|Leaf nodes|Subtrees","A computer folder hierarchy can be represented as a tree."],
+["Binary Tree","Non-Linear Structures","Each node has at most two children.","A binary tree is a tree in which each node has at most two children, called left and right.","Binary trees can represent expressions and hierarchical data. Forms include full, complete and balanced trees.","At most two children|Left and right|Multiple traversals|Can represent expressions","A node stores a value and left/right child links."],
+["Binary Search Tree","Non-Linear Structures","An ordered binary tree.","A binary search tree follows an ordering rule: smaller keys are placed in the left subtree and larger keys in the right, under a chosen duplicate policy.","Search and updates follow the ordering. Performance depends on tree shape; balanced trees have logarithmic height.","Ordering property|Search and updates|Inorder gives sorted keys|Can become skewed","Root 50 may have 30 on left and 70 on right."],
+["Tree Traversal","Non-Linear Structures","Preorder, inorder, postorder and level order.","Tree traversal visits nodes according to a specified order.","Depth-first methods include preorder, inorder and postorder. Level order visits one level at a time using a queue.","Preorder: Root Left Right|Inorder: Left Root Right|Postorder: Left Right Root|Level order: level by level","Inorder traversal of a BST visits keys in sorted order."],
+["Heap","Non-Linear Structures","A tree with a heap-order property.","A heap is a specialized tree structure following a heap property.","In a max heap, parents are at least as large as children; in a min heap, parents are no greater. Heaps are commonly stored in arrays.","Min and max heap|Priority queue support|Root holds extreme value|Used in heap sort","A max heap keeps its largest value at the root."],
+["Graph","Non-Linear Structures","Vertices and edges model networks.","A graph consists of vertices, also called nodes, and edges connecting them.","Graphs may be directed or undirected and weighted or unweighted. They model roads, relationships and networks.","Vertices and edges|Directed or undirected|Weighted or unweighted|Models networks","Cities are vertices and roads are edges."],
+["Graph Representation","Non-Linear Structures","Adjacency matrix and adjacency list.","Graph representation is a method for storing vertices and their connections.","An adjacency matrix uses a table; an adjacency list stores neighbors for each vertex. Space needs depend on graph density.","Adjacency matrix|Adjacency list|Matrix O(V²) space|List commonly O(V+E) space","A's adjacency list may contain B and C."],
+["Graph Traversal","Non-Linear Structures","Breadth-first and depth-first search.","Graph traversal visits vertices systematically.","BFS explores nearby vertices using a queue. DFS explores along a path using recursion or a stack. A visited set prevents repeated processing.","BFS|DFS|BFS uses queue|DFS uses stack or recursion","BFS can visit vertices layer by layer."],
+["Searching","Algorithms","Finding a target in a collection.","Searching checks whether a target value exists and locates it if present.","Linear search checks sequentially. Binary search repeatedly reduces a sorted search range.","Linear search|Binary search|Found or not found|Method depends on data","Find a roll number in student records."],
+["Linear Search","Algorithms","Sequentially inspect elements.","Linear search checks elements one by one until a target is found or the collection ends.","It works on sorted and unsorted data. Worst-case time is O(n).","Simple|Works on unsorted data|Best case O(1)|Worst case O(n)","for(int i=0;i<n;i++) if(a[i]==key) found=true;"],
+["Binary Search","Algorithms","Repeatedly halve a sorted search range.","Binary search finds a target in sorted data by checking the middle element and reducing the search interval.","Each step discards half the remaining range. With random-access arrays its time complexity is O(log n).","Requires sorted data|Checks middle|Halves search range|O(log n) time","Compare key with a[mid], then continue in one half."],
+["Sorting","Algorithms","Arrange values in a selected order.","Sorting arranges data in ascending or descending order.","It can make information easier to read, compare and search. Common methods include bubble, selection, insertion, merge and quick sort.","Ascending|Descending|Different methods|Choice depends on constraints","8, 3, 5 becomes 3, 5, 8."],
+["Bubble Sort","Algorithms","Repeated adjacent comparisons and swaps.","Bubble sort compares adjacent elements and swaps them when they are in the wrong order.","After passes, large values move toward the end. It is simple but inefficient for large inputs.","Adjacent comparisons|Simple algorithm|Worst case O(n²)|Can stop if no swaps","Compare a[i] and a[i+1], then swap if needed."],
+["Selection Sort","Algorithms","Select the next minimum value.","Selection sort repeatedly finds the smallest remaining element and places it at the next position.","It separates sorted and unsorted portions. Its common time complexity is O(n²).","Find minimum|Place at next position|O(n²)|Relatively few swaps","Find minimum and swap with first unsorted position."],
+["Insertion Sort","Algorithms","Insert each item into its sorted position.","Insertion sort builds a sorted portion by inserting one element at a time into its correct position.","It works well for small or nearly sorted collections. Worst-case time is O(n²).","Builds sorted prefix|Useful for small inputs|Usually stable|Worst case O(n²)","Shift larger values to make room for the next item."],
+["Applications and Conclusion","Applications","Review practical uses and importance.","Data structures organize information in software and support common operations.","They are used in databases, operating systems, compilers, navigation and scheduling. Understanding them supports further algorithm study.","Organized data|Problem-solving foundation|Software development|Further algorithm learning","A route finder can model locations and roads as a graph."]
+];
+
+const categories=["All",...new Set(topics.map(t=>t[1]))];
+let selected="All";
+let current=0;
+
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+function svgText(x,y,text,size=15,color="#eaf6ff",anchor="middle"){
+ return `<text x="${x}" y="${y}" text-anchor="${anchor}" font-family="Arial" font-size="${size}" font-weight="600" fill="${color}">${esc(text)}</text>`;
+}
+function node(x,y,label,color="#4de2df",r=25){
+ return `<circle cx="${x}" cy="${y}" r="${r}" fill="#163b59" stroke="${color}" stroke-width="2.5"/>${svgText(x,y+5,label,14)}`;
+}
+function line(x1,y1,x2,y2,color="#5797ff"){
+ return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="2.5" stroke-linecap="round"/>`;
+}
+function box(x,y,w,h,label,color="#4de2df"){
+ return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="8" fill="#173b59" stroke="${color}" stroke-width="2"/>${svgText(x+w/2,y+h/2+5,label,14)}`;
+}
+function makeVisual(index){
+ const title=topics[index][0];
+ let s=`<svg viewBox="0 0 600 250" role="img" aria-label="${esc(title)} diagram"><defs><linearGradient id="glow${index}" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#4de2df"/><stop offset="1" stop-color="#5797ff"/></linearGradient></defs>`;
+ const accent=`url(#glow${index})`;
+
+ if(index===7 || index===8 || index===9 || index===10){
+   for(let i=0;i<5;i++)s+=box(55+i*100,90,75,65,["12","24","36","48","60"][i],accent);
+   s+=svgText(300,195,"ARRAY · INDEXED MEMORY",16,"#4de2df");
+ }else if(index>=11 && index<=14){
+   for(let i=0;i<4;i++){
+     const x=65+i*125;
+     s+=box(x,95,78,58,["DATA","DATA","DATA","DATA"][i]);
+     if(i<3)s+=line(x+78,124,x+120,124);
+     if(index===14 && i===3)s+=line(x+40,153,65,175,"#4de2df");
+   }
+   s+=svgText(300,215,index===14?"CIRCULAR CONNECTION":"LINKED NODES",16,"#4de2df");
+ }else if(index>=15 && index<=19){
+   for(let i=0;i<4;i++)s+=box(235,180-i*42,130,35,["10","20","30","40"][i],i===3?accent:"#5797ff");
+   s+=svgText(300,35,index===19?"STACK APPLICATION":"LIFO · TOP",17,"#4de2df");
+   s+=line(405,45,405,190,"#4de2df");
+ }else if(index>=20 && index<=24){
+   for(let i=0;i<5;i++)s+=box(45+i*105,105,78,55,["10","20","30","40","50"][i],i===0?accent:"#5797ff");
+   s+=svgText(300,70,index===22?"CIRCULAR QUEUE":"FIFO · FRONT → REAR",17,"#4de2df");
+   if(index===22)s+=`<path d="M540 170 Q540 215 300 215 Q60 215 60 170" fill="none" stroke="#4de2df" stroke-width="3"/>`;
+ }else if(index>=25 && index<=29){
+   s+=line(300,58,180,125);s+=line(300,58,420,125);
+   s+=line(180,125,115,195);s+=line(180,125,245,195);
+   s+=line(420,125,355,195);s+=line(420,125,485,195);
+   s+=node(300,55,"A",accent,27);
+   s+=node(180,125,"B");s+=node(420,125,"C");
+   s+=node(115,195,"D");s+=node(245,195,"E");s+=node(355,195,"F");s+=node(485,195,"G");
+   s+=svgText(300,235,index===29?"TREE / HEAP STRUCTURE":"HIERARCHICAL NODES",14,"#4de2df");
+ }else if(index===30 || index===31 || index===32){
+   s+=line(170,80,300,155);s+=line(300,155,440,80);
+   s+=line(170,80,130,190);s+=line(300,155,300,215);s+=line(440,80,490,190);
+   s+=node(170,80,"A",accent);s+=node(300,155,"B");s+=node(440,80,"C");
+   s+=node(130,190,"D");s+=node(300,215,"E");s+=node(490,190,"F");
+   s+=svgText(300,30,index===32?"BFS / DFS":"VERTICES + EDGES",15,"#4de2df");
+ }else if(index>=33 && index<=34){
+   for(let i=0;i<6;i++)s+=box(35+i*90,105,65,55,["4","9","13","21","35","48"][i],i===3?accent:"#5797ff");
+   s+=svgText(300,70,index===34?"MIDPOINT SEARCH":"SEQUENTIAL SEARCH",17,"#4de2df");
+   if(index===34)s+=line(300,170,300,205,"#4de2df");
+ }else if(index>=35 && index<=38){
+   const vals=index===35?["8","3","5","1","7"]:index===36?["3","8","5","1","7"]:index===37?["3","5","8","1","7"]:["1","3","5","7","8"];
+   vals.forEach((v,i)=>s+=box(55+i*102,115,75,60,v,i===index-35?accent:"#5797ff"));
+   s+=svgText(300,70,index===35?"SORTING PROCESS":index===36?"BUBBLE SORT":index===37?"SELECTION / INSERTION":"ORDERED DATA",17,"#4de2df");
+ }else{
+   for(let i=0;i<4;i++){
+     s+=box(70+i*125,95,90,65,["DATA","STORE","PROCESS","RESULT"][i],i===index%4?accent:"#5797ff");
+     if(i<3)s+=line(160+i*125,127,195+i*125,127);
+   }
+   s+=svgText(300,195,"DATA ORGANIZATION",16,"#4de2df");
+ }
+ s+="</svg>";
+ return s;
+}
+
+function renderFilters(){
+ document.getElementById("filters").innerHTML=categories.map(c=>
+ `<button class="filter ${selected===c?"active":""}" data-cat="${esc(c)}">${esc(c)}</button>`
+ ).join("");
+ document.querySelectorAll(".filter").forEach(b=>b.addEventListener("click",()=>{
+   selected=b.dataset.cat;renderFilters();renderTopics();
+ }));
+}
+function renderTopics(){
+ const q=document.getElementById("searchInput").value.toLowerCase().trim();
+ const filtered=topics.map((t,i)=>({t,i})).filter(({t})=>
+  (selected==="All"||t[1]===selected) &&
+  (t[0]+" "+t[1]+" "+t[2]).toLowerCase().includes(q)
+ );
+ document.getElementById("count").textContent=`Showing ${filtered.length} of ${topics.length} topics`;
+ document.getElementById("topicGrid").innerHTML=filtered.map(({t,i})=>`
+ <article class="topic-card" tabindex="0" role="button" data-index="${i}">
+   <div class="visual">${makeVisual(i)}</div>
+   <div class="card-content">
+     <div class="card-top"><span class="number">TOPIC ${String(i+1).padStart(2,"0")}</span><span class="tag">${esc(t[1])}</span></div>
+     <h3>${esc(t[0])}</h3><p>${esc(t[2])}</p><span class="read">Explore Topic →</span>
+   </div>
+ </article>`).join("");
+ document.getElementById("empty").style.display=filtered.length?"none":"block";
+ document.querySelectorAll(".topic-card").forEach(card=>{
+  const open=()=>showTopic(Number(card.dataset.index));
+  card.addEventListener("click",open);
+  card.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();open();}});
+ });
+}
+function showTopic(i){
+ current=i;const t=topics[i];
+ document.getElementById("modalVisual").innerHTML=makeVisual(i);
+ document.getElementById("modalCategory").textContent=t[1]+" · TOPIC "+(i+1);
+ document.getElementById("modalTitle").textContent=t[0];
+ const points=t[5].split("|");
+ document.getElementById("modalBody").innerHTML=`
+ <h3>Definition</h3><p>${esc(t[3])}</p>
+ <h3>Explanation</h3><p>${esc(t[4])}</p>
+ <h3>Important Points</h3><ul>${points.map(p=>`<li>${esc(p)}</li>`).join("")}</ul>
+ <h3>Example</h3><div class="code">${esc(t[6])}</div>`;
+ document.getElementById("prevBtn").disabled=i===0;
+ document.getElementById("nextBtn").disabled=i===topics.length-1;
+ document.getElementById("modal").classList.add("show");
+ document.body.style.overflow="hidden";
+}
+function closeModal(){
+ document.getElementById("modal").classList.remove("show");
+ document.body.style.overflow="";
+}
+document.getElementById("closeBtn").addEventListener("click",closeModal);
+document.getElementById("prevBtn").addEventListener("click",()=>{if(current>0)showTopic(current-1)});
+document.getElementById("nextBtn").addEventListener("click",()=>{if(current<topics.length-1)showTopic(current+1)});
+document.getElementById("modal").addEventListener("click",e=>{if(e.target.id==="modal")closeModal()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
+document.getElementById("searchInput").addEventListener("input",renderTopics);
+document.getElementById("menuBtn").addEventListener("click",()=>document.getElementById("navLinks").classList.toggle("open"));
+document.querySelectorAll(".nav-links a").forEach(a=>a.addEventListener("click",()=>document.getElementById("navLinks").classList.remove("open")));
+renderFilters();
+renderTopics();
+</script>
+</body>
+</html>
